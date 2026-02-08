@@ -6,9 +6,7 @@
 <title>Granat | Table Reservation</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -16,24 +14,34 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: #fff;
 
-  /* LOGO ARKAPLAN */
-  background:
-    linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.9)),
-    url("Logo.png.jpeg") no-repeat top center;
-  background-size: 260px;
+  /* SABİT LOGO ARKAPLAN */
+  background-image: url("Logo.png.jpeg");
+  background-repeat: no-repeat;
+  background-position: center 90px;
+  background-size: 300px;
+  background-attachment: fixed;
   background-color: #000;
+}
+
+/* KARARTMA */
+.overlay {
+  min-height: 100vh;
+  background: linear-gradient(
+    rgba(0,0,0,0.6),
+    rgba(0,0,0,0.9)
+  );
 }
 
 .container {
   max-width: 420px;
   margin: auto;
-  padding: 220px 20px 20px; /* logo için üst boşluk */
+  padding: 260px 20px 30px;
 }
 
 .lang-buttons {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 12px;
   margin-bottom: 25px;
 }
 
@@ -41,7 +49,7 @@ body {
   width: 80px;
   padding: 10px 0;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
   border: 2px solid #00e5ff;
@@ -82,26 +90,24 @@ input:focus {
   outline: 2px solid #00e5ff;
 }
 
-button.submit-btn {
+button.submit {
   width: 100%;
   margin-top: 30px;
-  padding: 16px;
+  padding: 15px;
   background: #00e5ff;
   color: #000;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
 }
 
-button.submit-btn:hover {
-  opacity: 0.9;
-}
+button.submit:hover { opacity: 0.85; }
 
 .footer {
   text-align: center;
-  margin: 40px 0 10px;
+  margin-top: 40px;
   font-size: 12px;
   opacity: 0.5;
 }
@@ -109,78 +115,85 @@ button.submit-btn:hover {
 </head>
 
 <body>
-
+<div class="overlay">
 <div class="container">
 
-  <div class="lang-buttons">
-    <button id="enBtn" class="active" onclick="setLang('en')">EN</button>
-    <button id="ruBtn" onclick="setLang('ru')">RU</button>
-  </div>
+<div class="lang-buttons">
+  <button class="active" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('ru')">RU</button>
+  <button onclick="setLang('cz')">CZ</button>
+</div>
 
-  <h1 id="title">Book a Table</h1>
+<h1 id="title">Book a Table</h1>
 
-  <form action="https://formsubmit.co/granatpraha@proton.me" method="POST">
+<form action="https://formsubmit.co/granatpraha@proton.me" method="POST">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_subject" value="New Table Reservation">
+  <input type="hidden" name="_template" value="table">
 
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_subject" value="New Table Reservation">
-    <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="Language" id="langField" value="EN">
+  <label id="l1">First Name</label>
+  <input type="text" name="First Name" required>
 
-    <label id="firstNameLabel">First Name</label>
-    <input type="text" name="First Name" required>
+  <label id="l2">Last Name</label>
+  <input type="text" name="Last Name" required>
 
-    <label id="lastNameLabel">Last Name</label>
-    <input type="text" name="Last Name" required>
+  <label id="l3">Phone Number</label>
+  <input type="tel" name="Phone" placeholder="+420 777 774 143" required>
 
-    <label id="phoneLabel">Phone Number</label>
-    <input type="tel" name="Phone" placeholder="+420 123 456 789" required>
+  <label id="l4">Number of People</label>
+  <input type="number" name="People" min="1" max="20" required>
 
-    <label id="peopleLabel">Number of People</label>
-    <input type="number" name="People" min="1" max="20" required>
+  <label id="l5">Select Date</label>
+  <input type="date" name="Date" required>
 
-    <label id="dateLabel">Select Date</label>
-    <input type="date" name="Date" required>
+  <label id="l6">Select Time</label>
+  <input type="time" name="Time" required>
 
-    <label id="timeLabel">Select Time</label>
-    <input type="time" name="Time" required>
+  <button type="submit" class="submit" id="btn">Reserve Now</button>
+</form>
 
-    <button type="submit" class="submit-btn" id="submitBtn">Reserve Now</button>
+<div class="footer">© Granat Bar Reservation</div>
 
-  </form>
-
-  <div class="footer">
-    © Granat Bar – Reservation System
-  </div>
-
+</div>
 </div>
 
 <script>
 function setLang(lang) {
-  document.getElementById("enBtn").classList.remove("active");
-  document.getElementById("ruBtn").classList.remove("active");
+  document.querySelectorAll('.lang-buttons button')
+    .forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
 
-  if (lang === "en") {
-    document.getElementById("enBtn").classList.add("active");
-    document.getElementById("title").innerText = "Book a Table";
-    document.getElementById("firstNameLabel").innerText = "First Name";
-    document.getElementById("lastNameLabel").innerText = "Last Name";
-    document.getElementById("phoneLabel").innerText = "Phone Number";
-    document.getElementById("peopleLabel").innerText = "Number of People";
-    document.getElementById("dateLabel").innerText = "Select Date";
-    document.getElementById("timeLabel").innerText = "Select Time";
-    document.getElementById("submitBtn").innerText = "Reserve Now";
-    document.getElementById("langField").value = "EN";
-  } else {
-    document.getElementById("ruBtn").classList.add("active");
-    document.getElementById("title").innerText = "Забронировать стол";
-    document.getElementById("firstNameLabel").innerText = "Имя";
-    document.getElementById("lastNameLabel").innerText = "Фамилия";
-    document.getElementById("phoneLabel").innerText = "Телефон";
-    document.getElementById("peopleLabel").innerText = "Количество гостей";
-    document.getElementById("dateLabel").innerText = "Дата";
-    document.getElementById("timeLabel").innerText = "Время";
-    document.getElementById("submitBtn").innerText = "Забронировать";
-    document.getElementById("langField").value = "RU";
+  if (lang === 'en') {
+    title.innerText = "Book a Table";
+    l1.innerText = "First Name";
+    l2.innerText = "Last Name";
+    l3.innerText = "Phone Number";
+    l4.innerText = "Number of People";
+    l5.innerText = "Select Date";
+    l6.innerText = "Select Time";
+    btn.innerText = "Reserve Now";
+  }
+
+  if (lang === 'ru') {
+    title.innerText = "Забронировать стол";
+    l1.innerText = "Имя";
+    l2.innerText = "Фамилия";
+    l3.innerText = "Телефон";
+    l4.innerText = "Количество гостей";
+    l5.innerText = "Дата";
+    l6.innerText = "Время";
+    btn.innerText = "Забронировать";
+  }
+
+  if (lang === 'cz') {
+    title.innerText = "Rezervace stolu";
+    l1.innerText = "Jméno";
+    l2.innerText = "Příjmení";
+    l3.innerText = "Telefon";
+    l4.innerText = "Počet osob";
+    l5.innerText = "Datum";
+    l6.innerText = "Čas";
+    btn.innerText = "Rezervovat";
   }
 }
 </script>
