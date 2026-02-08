@@ -6,9 +6,7 @@
 <title>Book a Table</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -23,9 +21,35 @@ body {
     padding: 20px;
 }
 
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.logo img {
+    height: 70px;
+}
+
+.lang button {
+    background: transparent;
+    border: 1px solid #00e5ff;
+    color: #00e5ff;
+    margin-left: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.lang button.active {
+    background: #00e5ff;
+    color: #000;
+}
+
 h1 {
     text-align: center;
-    margin: 30px 0;
+    margin: 20px 0;
     font-size: 32px;
 }
 
@@ -64,10 +88,6 @@ button {
     cursor: pointer;
 }
 
-button:hover {
-    opacity: 0.85;
-}
-
 .footer {
     text-align: center;
     margin-top: 40px;
@@ -80,40 +100,88 @@ button:hover {
 <body>
 <div class="container">
 
-<h1>Book a Table</h1>
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">
+        <img src="Logo.png.jpeg" alt="Granat Bar Logo">
+    </div>
+    <div class="lang">
+        <button id="enBtn" class="active" onclick="setLang('en')">EN</button>
+        <button id="ruBtn" onclick="setLang('ru')">RU</button>
+    </div>
+</div>
+
+<h1 id="title">Book a Table</h1>
 
 <form action="https://formsubmit.co/granatpraha@proton.me" method="POST">
-
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_subject" value="New Table Reservation">
     <input type="hidden" name="_template" value="table">
 
-    <label>First Name</label>
+    <label id="l_fname">First Name</label>
     <input type="text" name="First Name" required>
 
-    <label>Last Name</label>
+    <label id="l_lname">Last Name</label>
     <input type="text" name="Last Name" required>
 
-    <label>Phone Number</label>
+    <label id="l_phone">Phone Number</label>
     <input type="tel" name="Phone" placeholder="+420 123 456 789" required>
 
-    <label>Number of People</label>
+    <label id="l_people">Number of People</label>
     <input type="number" name="People" min="1" max="20" required>
 
-    <label>Select Date</label>
+    <label id="l_date">Select Date</label>
     <input type="date" name="Date" required>
 
-    <label>Select Time</label>
+    <label id="l_time">Select Time</label>
     <input type="time" name="Time" required>
 
-    <button type="submit">Reserve Now</button>
-
+    <button type="submit" id="submitBtn">Reserve Now</button>
 </form>
 
-<div class="footer">
-© Reservation System
-</div>
+<div class="footer">© Granat Bar</div>
 
 </div>
+
+<script>
+const texts = {
+    en: {
+        title: "Book a Table",
+        fname: "First Name",
+        lname: "Last Name",
+        phone: "Phone Number",
+        people: "Number of People",
+        date: "Select Date",
+        time: "Select Time",
+        submit: "Reserve Now"
+    },
+    ru: {
+        title: "Бронирование стола",
+        fname: "Имя",
+        lname: "Фамилия",
+        phone: "Телефон",
+        people: "Количество гостей",
+        date: "Дата",
+        time: "Время",
+        submit: "Забронировать"
+    }
+};
+
+function setLang(lang) {
+    document.getElementById("title").innerText = texts[lang].title;
+    document.getElementById("l_fname").innerText = texts[lang].fname;
+    document.getElementById("l_lname").innerText = texts[lang].lname;
+    document.getElementById("l_phone").innerText = texts[lang].phone;
+    document.getElementById("l_people").innerText = texts[lang].people;
+    document.getElementById("l_date").innerText = texts[lang].date;
+    document.getElementById("l_time").innerText = texts[lang].time;
+    document.getElementById("submitBtn").innerText = texts[lang].submit;
+
+    enBtn.classList.remove("active");
+    ruBtn.classList.remove("active");
+    document.getElementById(lang + "Btn").classList.add("active");
+}
+</script>
+
 </body>
 </html>
