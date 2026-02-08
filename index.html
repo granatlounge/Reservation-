@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book a Table</title>
+<title>Granat Bar – Reservation</title>
 
 <style>
 * { box-sizing: border-box; }
@@ -24,21 +24,30 @@ body {
 /* HEADER */
 .header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 25px;
 }
 
 .logo img {
-    height: 70px;
+    height: 170px;
+    max-width: 100%;
+    margin-bottom: 15px;
+}
+
+/* LANG */
+.lang {
+    display: flex;
+    gap: 12px;
 }
 
 .lang button {
     background: transparent;
     border: 1px solid #00e5ff;
     color: #00e5ff;
-    margin-left: 5px;
-    padding: 5px 10px;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
 }
 
@@ -47,10 +56,11 @@ body {
     color: #000;
 }
 
+/* FORM */
 h1 {
     text-align: center;
-    margin: 20px 0;
-    font-size: 32px;
+    margin: 25px 0;
+    font-size: 34px;
 }
 
 label {
@@ -71,14 +81,10 @@ input {
     font-size: 16px;
 }
 
-input:focus {
-    outline: 2px solid #00e5ff;
-}
-
 button {
     width: 100%;
     margin-top: 25px;
-    padding: 15px;
+    padding: 16px;
     background: #00e5ff;
     color: #000;
     border: none;
@@ -90,7 +96,7 @@ button {
 
 .footer {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 35px;
     font-size: 12px;
     opacity: 0.5;
 }
@@ -103,7 +109,7 @@ button {
 <!-- HEADER -->
 <div class="header">
     <div class="logo">
-        <img src="Logo.png.jpeg" alt="Granat Bar Logo">
+        <img src="Logo.png.jpeg" alt="Granat Bar">
     </div>
     <div class="lang">
         <button id="enBtn" class="active" onclick="setLang('en')">EN</button>
@@ -113,30 +119,33 @@ button {
 
 <h1 id="title">Book a Table</h1>
 
-<form action="https://formsubmit.co/granatpraha@proton.me" method="POST">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_subject" value="New Table Reservation">
-    <input type="hidden" name="_template" value="table">
+<form id="reservationForm"
+      action="https://formsubmit.co/granatpraha@proton.me"
+      method="POST">
 
-    <label id="l_fname">First Name</label>
-    <input type="text" name="First Name" required>
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_subject" value="New Table Reservation">
+<input type="hidden" name="_template" value="table">
 
-    <label id="l_lname">Last Name</label>
-    <input type="text" name="Last Name" required>
+<label id="l_fname">First Name</label>
+<input type="text" name="First Name" id="fname" required>
 
-    <label id="l_phone">Phone Number</label>
-    <input type="tel" name="Phone" placeholder="+420 123 456 789" required>
+<label id="l_lname">Last Name</label>
+<input type="text" name="Last Name" id="lname" required>
 
-    <label id="l_people">Number of People</label>
-    <input type="number" name="People" min="1" max="20" required>
+<label id="l_phone">Phone Number</label>
+<input type="tel" name="Phone" id="phone" placeholder="+420 123 456 789" required>
 
-    <label id="l_date">Select Date</label>
-    <input type="date" name="Date" required>
+<label id="l_people">Number of People</label>
+<input type="number" name="People" id="people" min="1" max="20" required>
 
-    <label id="l_time">Select Time</label>
-    <input type="time" name="Time" required>
+<label id="l_date">Select Date</label>
+<input type="date" name="Date" id="date" required>
 
-    <button type="submit" id="submitBtn">Reserve Now</button>
+<label id="l_time">Select Time</label>
+<input type="time" name="Time" id="time" required>
+
+<button type="submit" id="submitBtn">Reserve Now</button>
 </form>
 
 <div class="footer">© Granat Bar</div>
@@ -144,6 +153,7 @@ button {
 </div>
 
 <script>
+/* LANGUAGE */
 const texts = {
     en: {
         title: "Book a Table",
@@ -168,19 +178,38 @@ const texts = {
 };
 
 function setLang(lang) {
-    document.getElementById("title").innerText = texts[lang].title;
-    document.getElementById("l_fname").innerText = texts[lang].fname;
-    document.getElementById("l_lname").innerText = texts[lang].lname;
-    document.getElementById("l_phone").innerText = texts[lang].phone;
-    document.getElementById("l_people").innerText = texts[lang].people;
-    document.getElementById("l_date").innerText = texts[lang].date;
-    document.getElementById("l_time").innerText = texts[lang].time;
-    document.getElementById("submitBtn").innerText = texts[lang].submit;
+    title.innerText = texts[lang].title;
+    l_fname.innerText = texts[lang].fname;
+    l_lname.innerText = texts[lang].lname;
+    l_phone.innerText = texts[lang].phone;
+    l_people.innerText = texts[lang].people;
+    l_date.innerText = texts[lang].date;
+    l_time.innerText = texts[lang].time;
+    submitBtn.innerText = texts[lang].submit;
 
     enBtn.classList.remove("active");
     ruBtn.classList.remove("active");
     document.getElementById(lang + "Btn").classList.add("active");
 }
+
+/* WHATSAPP REDIRECT */
+document.getElementById("reservationForm").addEventListener("submit", function() {
+    setTimeout(function () {
+
+        const message =
+`Granat Bar Reservation
+Name: ${fname.value} ${lname.value}
+Phone: ${phone.value}
+People: ${people.value}
+Date: ${date.value}
+Time: ${time.value}`;
+
+        window.open(
+            "https://wa.me/420777774143?text=" + encodeURIComponent(message),
+            "_blank"
+        );
+    }, 500);
+});
 </script>
 
 </body>
