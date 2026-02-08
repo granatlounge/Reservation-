@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Table</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #000;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
+}
+
+.container {
+    max-width: 420px;
+    margin: auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 32px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 6px;
+    background: #222;
+    color: #fff;
+    font-size: 16px;
+}
+
+input:focus {
+    outline: 2px solid #00e5ff;
+}
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px;
+    background: #00e5ff;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    opacity: 0.5;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>Book a Table</h1>
+
+<form action="https://formsubmit.co/granatpraha@proton.me" method="POST">
+
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_subject" value="New Table Reservation">
+    <input type="hidden" name="_template" value="table">
+
+    <label>First Name</label>
+    <input type="text" name="First Name" required>
+
+    <label>Last Name</label>
+    <input type="text" name="Last Name" required>
+
+    <label>Phone Number</label>
+    <input type="tel" name="Phone" placeholder="+420 123 456 789" required>
+
+    <label>Number of People</label>
+    <input type="number" name="People" min="1" max="20" required>
+
+    <label>Select Date</label>
+    <input type="date" name="Date" required>
+
+    <label>Select Time</label>
+    <input type="time" name="Time" required>
+
+    <button type="submit">Reserve Now</button>
+
+</form>
+
+<div class="footer">
+© Reservation System
+</div>
+
+</div>
+</body>
+</html>
