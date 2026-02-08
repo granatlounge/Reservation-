@@ -12,30 +12,29 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
+  background: #000;
   color: #fff;
-
-  /* SABİT LOGO ARKAPLAN */
-  background-image: url("Logo.png.jpeg");
-  background-repeat: no-repeat;
-  background-position: center 90px;
-  background-size: 300px;
-  background-attachment: fixed;
-  background-color: #000;
 }
 
-/* KARARTMA */
-.overlay {
-  min-height: 100vh;
-  background: linear-gradient(
-    rgba(0,0,0,0.6),
-    rgba(0,0,0,0.9)
-  );
+/* LOGO ALANI */
+.logo-wrap {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
+.logo-wrap img {
+  width: 220px;   /* BURASI LOGO BOYUTU */
+  max-width: 80vw;
+}
+
+/* FORM ALANI */
 .container {
   max-width: 420px;
   margin: auto;
-  padding: 260px 20px 30px;
+  padding: 340px 20px 30px; /* logo için boşluk */
 }
 
 .lang-buttons {
@@ -115,7 +114,12 @@ button.submit:hover { opacity: 0.85; }
 </head>
 
 <body>
-<div class="overlay">
+
+<!-- LOGO -->
+<div class="logo-wrap">
+  <img src="Logo.png.jpeg" alt="Granat Bar">
+</div>
+
 <div class="container">
 
 <div class="lang-buttons">
@@ -154,7 +158,6 @@ button.submit:hover { opacity: 0.85; }
 
 <div class="footer">© Granat Bar Reservation</div>
 
-</div>
 </div>
 
 <script>
