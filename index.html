@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Granat Bar – Reservation</title>
+<title>Granat Bar – Table Reservation</title>
 
 <style>
 * { box-sizing: border-box; }
@@ -24,18 +24,18 @@ body {
 
 /* LOGO */
 .logo img {
-    width: 70%;
-    max-width: 320px;
-    margin: 30px auto 20px;
+    width: 60%;
+    max-width: 260px;
+    margin: 25px auto 15px;
     display: block;
 }
 
-/* LANG */
+/* LANGUAGE */
 .lang {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
+    gap: 14px;
+    margin-bottom: 25px;
 }
 
 .lang button {
@@ -53,12 +53,13 @@ body {
     color: #000;
 }
 
-/* FORM */
+/* TITLE */
 h1 {
     margin: 20px 0 30px;
     font-size: 36px;
 }
 
+/* FORM */
 label {
     display: block;
     margin-top: 18px;
@@ -107,7 +108,7 @@ button.submit {
     <img src="Logo.png.jpeg" alt="Granat Bar">
 </div>
 
-<!-- LANG -->
+<!-- LANGUAGE -->
 <div class="lang">
     <button id="enBtn" class="active" onclick="setLang('en')">EN</button>
     <button id="ruBtn" onclick="setLang('ru')">RU</button>
@@ -130,7 +131,7 @@ button.submit {
 <input type="text" id="lname" name="Last Name" required>
 
 <label id="l_phone">Phone Number</label>
-<input type="tel" id="phone" name="Phone" placeholder="+420 123 456 789" required>
+<input type="tel" id="phone" name="Phone" placeholder="+420 777 774 143" required>
 
 <label id="l_people">Number of People</label>
 <input type="number" id="people" name="People" min="1" max="20" required>
@@ -149,6 +150,7 @@ button.submit {
 </div>
 
 <script>
+/* LANGUAGE */
 const texts = {
     en: {
         title: "Book a Table",
@@ -187,10 +189,11 @@ function setLang(lang) {
     document.getElementById(lang + "Btn").classList.add("active");
 }
 
-/* WHATSAPP */
-document.getElementById("reservationForm").addEventListener("submit", function() {
-    setTimeout(function () {
-        const msg =
+/* WHATSAPP – iPhone SAFE */
+document.getElementById("reservationForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const msg =
 `Granat Bar Reservation
 Name: ${fname.value} ${lname.value}
 Phone: ${phone.value}
@@ -198,13 +201,14 @@ People: ${people.value}
 Date: ${date.value}
 Time: ${time.value}`;
 
-        window.open(
-            "https://wa.me/420XXXXXXXXX?text=" + encodeURIComponent(msg),
-            "_blank"
-        );
-    }, 500);
+    window.location.href =
+        "https://wa.me/420777774143?text=" + encodeURIComponent(msg);
+
+    setTimeout(() => {
+        e.target.submit();
+    }, 1000);
 });
 </script>
 
 </body>
-</html
+</html>
