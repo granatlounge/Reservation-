@@ -3,200 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Granat | Table Reservation</title>
+<title>Granat Bar – Table Reservation</title>
 
 <style>
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #000;
-  color: #fff;
+body{
+  margin:0;
+  background:#000;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#fff;
 }
 
-/* LOGO ALANI */
-.logo-wrap {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+.container{
+  max-width:420px;
+  margin:auto;
+  padding:20px;
 }
 
-.logo-wrap img {
-  width: 220px;   /* BURASI LOGO BOYUTU */
-  max-width: 80vw;
+/* LOGO */
+.logo{
+  display:flex;
+  justify-content:center;
+  margin:40px 0 20px;
+}
+.logo img{
+  width:260px;   /* DAHA BÜYÜK */
+  max-width:90%;
 }
 
-/* FORM ALANI */
-.container {
-  max-width: 420px;
-  margin: auto;
-  padding: 340px 20px 30px; /* logo için boşluk */
+/* LANGUAGE */
+.lang{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:25px;
+}
+.lang button{
+  padding:10px 18px;
+  border-radius:8px;
+  font-size:15px;
+  border:2px solid #00e5ff;
+  background:transparent;
+  color:#00e5ff;
+  cursor:pointer;
+}
+.lang button.active{
+  background:#00e5ff;
+  color:#000;
 }
 
-.lang-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 25px;
+/* TITLE */
+h1{
+  text-align:center;
+  font-size:34px;
+  margin-bottom:30px;
 }
 
-.lang-buttons button {
-  width: 80px;
-  padding: 10px 0;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  border: 2px solid #00e5ff;
-  background: transparent;
-  color: #00e5ff;
+/* FORM */
+label{
+  display:block;
+  margin-top:18px;
+  font-size:14px;
+  opacity:.85;
 }
 
-.lang-buttons button.active {
-  background: #00e5ff;
-  color: #000;
+input{
+  width:100%;
+  margin-top:8px;
+  padding:14px;
+  border:none;
+  border-radius:6px;
+  background:#222;
+  color:#fff;
+  font-size:16px;
 }
 
-h1 {
-  text-align: center;
-  margin: 0 0 30px;
-  font-size: 34px;
+button.submit{
+  width:100%;
+  margin-top:30px;
+  padding:16px;
+  border:none;
+  border-radius:8px;
+  background:#00e5ff;
+  color:#000;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-label {
-  display: block;
-  margin-top: 18px;
-  font-size: 14px;
-  opacity: 0.85;
-}
-
-input {
-  width: 100%;
-  padding: 14px;
-  margin-top: 8px;
-  border: none;
-  border-radius: 6px;
-  background: #222;
-  color: #fff;
-  font-size: 16px;
-}
-
-input:focus {
-  outline: 2px solid #00e5ff;
-}
-
-button.submit {
-  width: 100%;
-  margin-top: 30px;
-  padding: 15px;
-  background: #00e5ff;
-  color: #000;
-  border: none;
-  border-radius: 6px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button.submit:hover { opacity: 0.85; }
-
-.footer {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 12px;
-  opacity: 0.5;
+.footer{
+  text-align:center;
+  margin:40px 0 20px;
+  font-size:12px;
+  opacity:.5;
 }
 </style>
 </head>
 
 <body>
-
-<!-- LOGO -->
-<div class="logo-wrap">
-  <img src="Logo.png.jpeg" alt="Granat Bar">
-</div>
-
 <div class="container">
 
-<div class="lang-buttons">
-  <button class="active" onclick="setLang('en')">EN</button>
-  <button onclick="setLang('ru')">RU</button>
-  <button onclick="setLang('cz')">CZ</button>
-</div>
+  <!-- LOGO -->
+  <div class="logo">
+    <img src="Logo.png.jpeg" alt="Granat Bar Logo">
+  </div>
 
-<h1 id="title">Book a Table</h1>
+  <!-- LANGUAGE -->
+  <div class="lang">
+    <button class="active" onclick="setLang('en')">EN</button>
+    <button onclick="setLang('ru')">RU</button>
+    <button onclick="setLang('cz')">CZ</button>
+  </div>
 
-<form action="https://formsubmit.co/granatpraha@proton.me" method="POST">
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_subject" value="New Table Reservation">
-  <input type="hidden" name="_template" value="table">
+  <!-- TITLE -->
+  <h1 id="title">Book a Table</h1>
 
-  <label id="l1">First Name</label>
-  <input type="text" name="First Name" required>
+  <!-- FORM (MAIL BOZULMAZ) -->
+  <form action="https://formsubmit.co/granatpraha@proton.me" method="POST">
 
-  <label id="l2">Last Name</label>
-  <input type="text" name="Last Name" required>
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_subject" value="New Table Reservation">
+    <input type="hidden" name="_template" value="table">
 
-  <label id="l3">Phone Number</label>
-  <input type="tel" name="Phone" placeholder="+420 777 774 143" required>
+    <label id="l1">First Name</label>
+    <input type="text" name="First Name" required>
 
-  <label id="l4">Number of People</label>
-  <input type="number" name="People" min="1" max="20" required>
+    <label id="l2">Last Name</label>
+    <input type="text" name="Last Name" required>
 
-  <label id="l5">Select Date</label>
-  <input type="date" name="Date" required>
+    <label id="l3">Phone Number</label>
+    <input type="tel" name="Phone" placeholder="+420 777 774 143" required>
 
-  <label id="l6">Select Time</label>
-  <input type="time" name="Time" required>
+    <label id="l4">Number of People</label>
+    <input type="number" name="People" min="1" max="20" required>
 
-  <button type="submit" class="submit" id="btn">Reserve Now</button>
-</form>
+    <label id="l5">Select Date</label>
+    <input type="date" name="Date" required>
 
-<div class="footer">© Granat Bar Reservation</div>
+    <label id="l6">Select Time</label>
+    <input type="time" name="Time" required>
+
+    <button class="submit" id="submitBtn">Reserve Now</button>
+  </form>
+
+  <div class="footer">© Granat Bar Reservation</div>
 
 </div>
 
 <script>
-function setLang(lang) {
-  document.querySelectorAll('.lang-buttons button')
-    .forEach(b => b.classList.remove('active'));
+function setLang(lang){
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.remove('active'));
   event.target.classList.add('active');
 
-  if (lang === 'en') {
-    title.innerText = "Book a Table";
-    l1.innerText = "First Name";
-    l2.innerText = "Last Name";
-    l3.innerText = "Phone Number";
-    l4.innerText = "Number of People";
-    l5.innerText = "Select Date";
-    l6.innerText = "Select Time";
-    btn.innerText = "Reserve Now";
+  if(lang==='en'){
+    title.innerText="Book a Table";
+    l1.innerText="First Name";
+    l2.innerText="Last Name";
+    l3.innerText="Phone Number";
+    l4.innerText="Number of People";
+    l5.innerText="Select Date";
+    l6.innerText="Select Time";
+    submitBtn.innerText="Reserve Now";
   }
 
-  if (lang === 'ru') {
-    title.innerText = "Забронировать стол";
-    l1.innerText = "Имя";
-    l2.innerText = "Фамилия";
-    l3.innerText = "Телефон";
-    l4.innerText = "Количество гостей";
-    l5.innerText = "Дата";
-    l6.innerText = "Время";
-    btn.innerText = "Забронировать";
+  if(lang==='ru'){
+    title.innerText="Забронировать стол";
+    l1.innerText="Имя";
+    l2.innerText="Фамилия";
+    l3.innerText="Телефон";
+    l4.innerText="Количество гостей";
+    l5.innerText="Дата";
+    l6.innerText="Время";
+    submitBtn.innerText="Забронировать";
   }
 
-  if (lang === 'cz') {
-    title.innerText = "Rezervace stolu";
-    l1.innerText = "Jméno";
-    l2.innerText = "Příjmení";
-    l3.innerText = "Telefon";
-    l4.innerText = "Počet osob";
-    l5.innerText = "Datum";
-    l6.innerText = "Čas";
-    btn.innerText = "Rezervovat";
+  if(lang==='cz'){
+    title.innerText="Rezervace stolu";
+    l1.innerText="Jméno";
+    l2.innerText="Příjmení";
+    l3.innerText="Telefon";
+    l4.innerText="Počet osob";
+    l5.innerText="Datum";
+    l6.innerText="Čas";
+    submitBtn.innerText="Rezervovat";
   }
 }
 </script>
