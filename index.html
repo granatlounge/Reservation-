@@ -6,8 +6,6 @@
 <title>Granat Bar – Reservation</title>
 
 <style>
-* { box-sizing: border-box; }
-
 body {
   margin: 0;
   background: #000;
@@ -22,203 +20,121 @@ body {
 }
 
 .logo {
-  text-align: center;
-  margin: 40px 0 20px;
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
 }
 
 .logo img {
-  width: 220px;
-  max-width: 90%;
+  width: 180px;
 }
 
 .lang {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .lang button {
-  padding: 10px 22px;
+  padding: 10px 18px;
   border-radius: 8px;
   border: 2px solid #00e5ff;
   background: transparent;
   color: #00e5ff;
-  font-size: 14px;
-  cursor: pointer;
+  font-weight: bold;
 }
 
-.lang button.active {
+.lang .active {
   background: #00e5ff;
   color: #000;
-  font-weight: bold;
 }
 
 h1 {
   text-align: center;
-  font-size: 32px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 label {
-  display: block;
-  margin-top: 15px;
   font-size: 14px;
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 input {
   width: 100%;
   padding: 14px;
-  margin-top: 6px;
+  margin: 8px 0 18px;
+  border-radius: 6px;
   border: none;
-  border-radius: 8px;
   background: #222;
   color: #fff;
-  font-size: 16px;
 }
 
 button.submit {
   width: 100%;
-  margin-top: 30px;
   padding: 16px;
-  background: #00e5ff;
-  color: #000;
-  border: none;
-  border-radius: 10px;
   font-size: 18px;
   font-weight: bold;
-  cursor: pointer;
-}
-
-button.submit:disabled {
-  opacity: 0.6;
+  border-radius: 8px;
+  border: none;
+  background: #00e5ff;
+  color: #000;
 }
 
 .footer {
   text-align: center;
-  margin: 40px 0 10px;
   font-size: 12px;
   opacity: 0.5;
+  margin: 30px 0;
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
-  <div class="logo">
-    <!-- LOGO DOSYA ADI: Logo.png.jpeg -->
-    <img src="Logo.png.jpeg" alt="Granat Bar">
-  </div>
-
-  <div class="lang">
-    <button class="active" onclick="setLang('en', this)">EN</button>
-    <button onclick="setLang('ru', this)">RU</button>
-    <button onclick="setLang('cz', this)">CZ</button>
-  </div>
-
-  <h1 id="title">Book a Table</h1>
-
-  <form id="reservationForm">
-    <label id="l_fname">First Name</label>
-    <input type="text" name="firstName" required>
-
-    <label id="l_lname">Last Name</label>
-    <input type="text" name="lastName" required>
-
-    <label id="l_phone">Phone Number</label>
-    <input type="tel" name="phone" placeholder="+420 777 774 143" required>
-
-    <label id="l_people">Number of People</label>
-    <input type="number" name="people" min="1" max="20" required>
-
-    <label id="l_date">Select Date</label>
-    <input type="date" name="date" required>
-
-    <label id="l_time">Select Time</label>
-    <input type="time" name="time" required>
-
-    <button class="submit" type="submit" id="submitBtn">Reserve Now</button>
-  </form>
-
-  <div class="footer">© Granat Bar Reservation</div>
-
+<div class="logo">
+  <img src="logo.png" alt="Granat Bar">
 </div>
 
-<script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbzbvHEsBbAGmLJl7vsTEIS8k9Aignn73dfJDQSZso5f_ZGnaq8jkOo3YFRLliR4Q6Eb/exec";
+<div class="lang">
+  <button class="active">EN</button>
+  <button>RU</button>
+  <button>CZ</button>
+</div>
 
-const texts = {
-  en: {
-    title: "Book a Table",
-    fname: "First Name",
-    lname: "Last Name",
-    phone: "Phone Number",
-    people: "Number of People",
-    date: "Select Date",
-    time: "Select Time",
-    submit: "Reserve Now"
-  },
-  ru: {
-    title: "Забронировать стол",
-    fname: "Имя",
-    lname: "Фамилия",
-    phone: "Телефон",
-    people: "Количество гостей",
-    date: "Дата",
-    time: "Время",
-    submit: "Забронировать"
-  },
-  cz: {
-    title: "Rezervace stolu",
-    fname: "Jméno",
-    lname: "Příjmení",
-    phone: "Telefon",
-    people: "Počet osob",
-    date: "Datum",
-    time: "Čas",
-    submit: "Rezervovat"
-  }
-};
+<h1>Book a Table</h1>
 
-function setLang(lang, el) {
-  document.querySelectorAll(".lang button").forEach(b => b.classList.remove("active"));
-  el.classList.add("active");
+<form method="POST"
+action="https://script.google.com/macros/s/AKfycbzbvHEsBbAGmLJl7vsTEIS8k9Aignn73dfJDQSZso5f_ZGnaq8jkOo3YFRLliR4Q6Eb/exec">
 
-  document.getElementById("title").innerText = texts[lang].title;
-  document.getElementById("l_fname").innerText = texts[lang].fname;
-  document.getElementById("l_lname").innerText = texts[lang].lname;
-  document.getElementById("l_phone").innerText = texts[lang].phone;
-  document.getElementById("l_people").innerText = texts[lang].people;
-  document.getElementById("l_date").innerText = texts[lang].date;
-  document.getElementById("l_time").innerText = texts[lang].time;
-  document.getElementById("submitBtn").innerText = texts[lang].submit;
-}
+  <label>First Name</label>
+  <input type="text" name="firstName" required>
 
-document.getElementById("reservationForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const btn = document.getElementById("submitBtn");
-  btn.disabled = true;
-  btn.innerText = "Sending...";
+  <label>Last Name</label>
+  <input type="text" name="lastName" required>
 
-  fetch(scriptURL, {
-    method: "POST",
-    body: new FormData(this)
-  })
-  .then(() => {
-    alert("Reservation sent!");
-    this.reset();
-    btn.disabled = false;
-    btn.innerText = "Reserve Now";
-  })
-  .catch(() => {
-    alert("Error. Please try again.");
-    btn.disabled = false;
-    btn.innerText = "Reserve Now";
-  });
-});
-</script>
+  <label>Phone Number</label>
+  <input type="tel" name="phone" placeholder="+420 777 774 143" required>
+
+  <label>Number of People</label>
+  <input type="number" name="people" min="1" max="20" required>
+
+  <label>Select Date</label>
+  <input type="date" name="date" required>
+
+  <label>Select Time</label>
+  <input type="time" name="time" required>
+
+  <button type="submit" class="submit">Reserve Now</button>
+</form>
+
+<div class="footer">
+© Granat Bar Reservation
+</div>
+
+</div>
 
 </body>
 </html>
