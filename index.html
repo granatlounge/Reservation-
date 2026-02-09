@@ -96,26 +96,30 @@ button.submit{
 
 <h1 id="title">Book a Table</h1>
 
-<form method="POST"
-action="https://script.google.com/macros/s/AKfycbzbvHEsBbAGmLJl7vsTEIS8k9Aignn73dfJDQSZso5f_ZGnaq8jkOo3YFRLliR4Q6Eb/exec">
+<form method="POST" action="https://formsubmit.co/granatpraha@proton.me">
+  <!-- FormSubmit settings -->
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_subject" value="New Reservation - Granat Bar">
+  <input type="hidden" name="_next" value="thankyou.html">
 
   <label id="lfn">First Name</label>
-  <input name="firstName" required>
+  <input name="First Name" required>
 
   <label id="lln">Last Name</label>
-  <input name="lastName" required>
+  <input name="Last Name" required>
 
   <label id="lph">Phone Number</label>
-  <input name="phone" placeholder="+420 777 774 143" required>
+  <input name="Phone" placeholder="+420 777 774 143" required>
 
   <label id="lpe">Number of People</label>
-  <input type="number" name="people" min="1" max="20" required>
+  <input type="number" name="People" min="1" max="20" required>
 
   <label id="lda">Date</label>
-  <input type="date" name="date" required>
+  <input type="date" name="Date" required>
 
   <label id="lti">Time</label>
-  <input type="time" name="time" required>
+  <input type="time" name="Time" required>
 
   <button class="submit" type="submit" id="btn">Reserve Now</button>
 </form>
@@ -126,36 +130,9 @@ action="https://script.google.com/macros/s/AKfycbzbvHEsBbAGmLJl7vsTEIS8k9Aignn73
 
 <script>
 const txt={
-  en:{
-    t:"Book a Table",
-    fn:"First Name",
-    ln:"Last Name",
-    ph:"Phone Number",
-    pe:"Number of People",
-    da:"Date",
-    ti:"Time",
-    b:"Reserve Now"
-  },
-  ru:{
-    t:"Забронировать стол",
-    fn:"Имя",
-    ln:"Фамилия",
-    ph:"Телефон",
-    pe:"Количество гостей",
-    da:"Дата",
-    ti:"Время",
-    b:"Забронировать"
-  },
-  cz:{
-    t:"Rezervace stolu",
-    fn:"Jmeno",
-    ln:"Prijmeni",
-    ph:"Telefon",
-    pe:"Pocet osob",
-    da:"Datum",
-    ti:"Cas",
-    b:"Rezervovat"
-  }
+  en:{t:"Book a Table",fn:"First Name",ln:"Last Name",ph:"Phone Number",pe:"Number of People",da:"Date",ti:"Time",b:"Reserve Now"},
+  ru:{t:"Забронировать стол",fn:"Имя",ln:"Фамилия",ph:"Телефон",pe:"Количество гостей",da:"Дата",ti:"Время",b:"Забронировать"},
+  cz:{t:"Rezervace stolu",fn:"Jmeno",ln:"Prijmeni",ph:"Telefon",pe:"Pocet osob",da:"Datum",ti:"Cas",b:"Rezervovat"}
 };
 
 function setLang(l,e){
