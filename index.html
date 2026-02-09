@@ -6,15 +6,13 @@
 <title>Granat Bar – Reservation</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   background: #000;
-  font-family: Arial, Helvetica, sans-serif;
   color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .container {
@@ -24,31 +22,28 @@ body {
   text-align: center;
 }
 
-/* LOGO */
 .logo {
-  margin: 30px 0 20px;
+  margin: 40px 0 20px;
 }
-
 .logo img {
-  width: 220px;   /* LOGO BÜYÜKLÜĞÜ */
+  width: 220px;
   max-width: 90%;
 }
 
-/* LANGUAGE BUTTONS */
 .lang-buttons {
   display: flex;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 .lang-buttons button {
-  padding: 10px 18px;
+  padding: 12px 24px;
   border-radius: 8px;
+  font-size: 16px;
   border: 2px solid #00e5ff;
   background: transparent;
   color: #00e5ff;
-  font-weight: bold;
   cursor: pointer;
 }
 
@@ -57,25 +52,22 @@ body {
   color: #000;
 }
 
-/* TITLE */
 h1 {
-  font-size: 32px;
-  margin-bottom: 20px;
+  font-size: 34px;
+  margin-bottom: 30px;
 }
 
-/* FORM */
 label {
   display: block;
   text-align: left;
-  margin-top: 15px;
+  margin: 14px 0 6px;
   font-size: 14px;
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 input {
   width: 100%;
   padding: 14px;
-  margin-top: 6px;
   border-radius: 6px;
   border: none;
   background: #222;
@@ -83,13 +75,9 @@ input {
   font-size: 16px;
 }
 
-input:focus {
-  outline: 2px solid #00e5ff;
-}
-
 button.submit {
+  margin-top: 28px;
   width: 100%;
-  margin-top: 30px;
   padding: 16px;
   font-size: 18px;
   font-weight: bold;
@@ -100,12 +88,8 @@ button.submit {
   cursor: pointer;
 }
 
-button.submit:hover {
-  opacity: 0.9;
-}
-
 .footer {
-  margin-top: 40px;
+  margin: 40px 0 20px;
   font-size: 12px;
   opacity: 0.5;
 }
@@ -113,15 +97,12 @@ button.submit:hover {
 </head>
 
 <body>
-
 <div class="container">
 
-  <!-- LOGO -->
   <div class="logo">
-    <img src="Logo.png.jpeg" alt="Granat Bar Logo">
+    <img src="Logo.png.jpeg" alt="Granat Bar">
   </div>
 
-  <!-- LANGUAGES -->
   <div class="lang-buttons">
     <button class="active" onclick="setLang('en')">EN</button>
     <button onclick="setLang('ru')">RU</button>
@@ -130,58 +111,49 @@ button.submit:hover {
 
   <h1 id="title">Book a Table</h1>
 
-  <!-- FORM -->
-  <form id="reservationForm">
-    <label id="l_first">First Name</label>
-    <input type="text" id="firstName" required>
+  <form method="POST"
+    action="https://script.google.com/macros/s/AKfycbxXjM8eBCK_7djqHOHbzplFVPlCiQ5y8lmRnAoyjHCOYdUpLKQ_u6ugkNr_s-FF_lEz/exec">
 
-    <label id="l_last">Last Name</label>
-    <input type="text" id="lastName" required>
+    <label id="l_fname">First Name</label>
+    <input name="firstName" required>
+
+    <label id="l_lname">Last Name</label>
+    <input name="lastName" required>
 
     <label id="l_phone">Phone Number</label>
-    <input type="tel" id="phone" placeholder="+420 777 774 143" required>
+    <input name="phone" value="+420 " required>
 
     <label id="l_people">Number of People</label>
-    <input type="number" id="people" min="1" required>
+    <input type="number" name="people" min="1" max="20" required>
 
-    <label id="l_date">Select Date</label>
-    <input type="date" id="date" required>
+    <label id="l_date">Date</label>
+    <input type="date" name="date" required>
 
-    <label id="l_time">Select Time</label>
-    <input type="time" id="time" required>
+    <label id="l_time">Time</label>
+    <input type="time" name="time" required>
 
-    <button type="submit" class="submit" id="submitBtn">
-      Reserve Now
-    </button>
+    <button class="submit" id="submit">Reserve Now</button>
   </form>
 
-  <div class="footer">
-    © Granat Bar Reservation
-  </div>
-
+  <div class="footer">© Granat Bar Reservation</div>
 </div>
 
-<!-- JAVASCRIPT -->
 <script>
-/* 🔴 BURAYA KENDİ /exec URL’İN */
-const SCRIPT_URL = "BURAYA_SCRIPT_EXEC_URL_YAPISTIR";
-
-/* LANGUAGE TEXTS */
-const texts = {
+const text = {
   en: {
     title: "Book a Table",
-    first: "First Name",
-    last: "Last Name",
+    fname: "First Name",
+    lname: "Last Name",
     phone: "Phone Number",
     people: "Number of People",
-    date: "Select Date",
-    time: "Select Time",
+    date: "Date",
+    time: "Time",
     submit: "Reserve Now"
   },
   ru: {
     title: "Забронировать стол",
-    first: "Имя",
-    last: "Фамилия",
+    fname: "Имя",
+    lname: "Фамилия",
     phone: "Телефон",
     people: "Количество гостей",
     date: "Дата",
@@ -190,8 +162,8 @@ const texts = {
   },
   cz: {
     title: "Rezervace stolu",
-    first: "Jméno",
-    last: "Příjmení",
+    fname: "Jméno",
+    lname: "Příjmení",
     phone: "Telefon",
     people: "Počet osob",
     date: "Datum",
@@ -200,44 +172,20 @@ const texts = {
   }
 };
 
-function setLang(lang) {
-  document.getElementById("title").innerText = texts[lang].title;
-  document.getElementById("l_first").innerText = texts[lang].first;
-  document.getElementById("l_last").innerText = texts[lang].last;
-  document.getElementById("l_phone").innerText = texts[lang].phone;
-  document.getElementById("l_people").innerText = texts[lang].people;
-  document.getElementById("l_date").innerText = texts[lang].date;
-  document.getElementById("l_time").innerText = texts[lang].time;
-  document.getElementById("submitBtn").innerText = texts[lang].submit;
+function setLang(l) {
+  document.getElementById("title").innerText = text[l].title;
+  l_fname.innerText = text[l].fname;
+  l_lname.innerText = text[l].lname;
+  l_phone.innerText = text[l].phone;
+  l_people.innerText = text[l].people;
+  l_date.innerText = text[l].date;
+  l_time.innerText = text[l].time;
+  submit.innerText = text[l].submit;
 
-  document.querySelectorAll(".lang-buttons button").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".lang-buttons button")
+    .forEach(b => b.classList.remove("active"));
   event.target.classList.add("active");
 }
-
-/* FORM SUBMIT → GOOGLE SHEETS */
-document.getElementById("https://script.google.com/macros/s/AKfycbxXjM8eBCK_7djqHOHbzplFVPlCiQ5y8lmRnAoyjHCOYdUpLKQ_u6ugkNr_s-FF_lEz/exec").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const data = {
-    firstName: firstName.value,
-    lastName: lastName.value,
-    phone: phone.value,
-    people: people.value,
-    date: date.value,
-    time: time.value
-  };
-
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify(data)
-  })
-  .then(r => r.text())
-  .then(() => {
-    alert("Reservation saved!");
-    reservationForm.reset();
-  })
-  .catch(() => alert("Error"));
-});
 </script>
 
 </body>
