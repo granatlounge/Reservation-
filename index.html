@@ -7,76 +7,76 @@
 
 <style>
 body{
-    margin:0;
-    background:#000;
-    font-family:Arial,Helvetica,sans-serif;
-    color:#fff;
+  margin:0;
+  background:#000;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#fff;
 }
 .container{
-    max-width:420px;
-    margin:auto;
-    padding:20px;
+  max-width:420px;
+  margin:auto;
+  padding:20px;
 }
 .logo{
-    text-align:center;
-    margin:40px 0 20px;
+  text-align:center;
+  margin:40px 0 20px;
 }
 .logo img{
-    width:260px;
-    max-width:90%;
+  width:260px;
+  max-width:90%;
 }
 .lang{
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    margin-bottom:25px;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:25px;
 }
 .lang button{
-    padding:10px 20px;
-    border-radius:8px;
-    border:2px solid #00e5ff;
-    background:transparent;
-    color:#00e5ff;
-    font-weight:bold;
-    cursor:pointer;
+  padding:10px 20px;
+  border-radius:8px;
+  border:2px solid #00e5ff;
+  background:transparent;
+  color:#00e5ff;
+  font-weight:bold;
+  cursor:pointer;
 }
 .lang button.active{
-    background:#00e5ff;
-    color:#000;
+  background:#00e5ff;
+  color:#000;
 }
 h1{
-    text-align:center;
-    margin-bottom:25px;
+  text-align:center;
+  margin-bottom:25px;
 }
 label{
-    font-size:14px;
-    opacity:.85;
+  font-size:14px;
+  opacity:.85;
 }
 input{
-    width:100%;
-    padding:14px;
-    margin:6px 0 18px;
-    border:none;
-    border-radius:6px;
-    background:#222;
-    color:#fff;
+  width:100%;
+  padding:14px;
+  margin:6px 0 18px;
+  border:none;
+  border-radius:6px;
+  background:#222;
+  color:#fff;
 }
 button.submit{
-    width:100%;
-    padding:15px;
-    background:#00e5ff;
-    color:#000;
-    border:none;
-    border-radius:8px;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
+  width:100%;
+  padding:15px;
+  background:#00e5ff;
+  color:#000;
+  border:none;
+  border-radius:8px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
 }
 .footer{
-    text-align:center;
-    margin-top:30px;
-    font-size:12px;
-    opacity:.5;
+  text-align:center;
+  margin-top:30px;
+  font-size:12px;
+  opacity:.5;
 }
 </style>
 </head>
@@ -85,37 +85,39 @@ button.submit{
 <div class="container">
 
 <div class="logo">
-    <img src="Logo.png.jpeg" alt="Granat Bar">
+  <img src="Logo.png.jpeg" alt="Granat Bar">
 </div>
 
 <div class="lang">
-    <button class="active" onclick="setLang('en')">EN</button>
-    <button onclick="setLang('ru')">RU</button>
-    <button onclick="setLang('cz')">CZ</button>
+  <button class="active" onclick="setLang('en',this)">EN</button>
+  <button onclick="setLang('ru',this)">RU</button>
+  <button onclick="setLang('cz',this)">CZ</button>
 </div>
 
 <h1 id="title">Book a Table</h1>
 
-<form id="reservationForm">
-    <label id="l_fname">First Name</label>
-    <input name="firstName" required>
+<form method="POST"
+action="https://script.google.com/macros/s/AKfycbzbvHEsBbAGmLJl7vsTEIS8k9Aignn73dfJDQSZso5f_ZGnaq8jkOo3YFRLliR4Q6Eb/exec">
 
-    <label id="l_lname">Last Name</label>
-    <input name="lastName" required>
+  <label id="lfn">First Name</label>
+  <input name="firstName" required>
 
-    <label id="l_phone">Phone Number</label>
-    <input name="phone" placeholder="+420 777 774 143" required>
+  <label id="lln">Last Name</label>
+  <input name="lastName" required>
 
-    <label id="l_people">Number of People</label>
-    <input type="number" name="people" min="1" max="20" required>
+  <label id="lph">Phone Number</label>
+  <input name="phone" placeholder="+420 777 774 143" required>
 
-    <label id="l_date">Select Date</label>
-    <input type="date" name="date" required>
+  <label id="lpe">Number of People</label>
+  <input type="number" name="people" min="1" max="20" required>
 
-    <label id="l_time">Select Time</label>
-    <input type="time" name="time" required>
+  <label id="lda">Date</label>
+  <input type="date" name="date" required>
 
-    <button class="submit" type="submit" id="submitBtn">Reserve Now</button>
+  <label id="lti">Time</label>
+  <input type="time" name="time" required>
+
+  <button class="submit" type="submit" id="btn">Reserve Now</button>
 </form>
 
 <div class="footer">© Granat Bar Reservation</div>
@@ -123,66 +125,51 @@ button.submit{
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbvHEsBbAGmLJl7vsTEIS8k9Aignn73dfJDQSZso5f_ZGnaq8jkOo3YFRLliR4Q6Eb/exec";
-
-const text = {
-    en:{
-        title:"Book a Table",
-        fname:"First Name",
-        lname:"Last Name",
-        phone:"Phone Number",
-        people:"Number of People",
-        date:"Select Date",
-        time:"Select Time",
-        btn:"Reserve Now"
-    },
-    ru:{
-        title:"Забронировать стол",
-        fname:"Имя",
-        lname:"Фамилия",
-        phone:"Телефон",
-        people:"Количество гостей",
-        date:"Дата",
-        time:"Время",
-        btn:"Забронировать"
-    },
-    cz:{
-        title:"Rezervace stolu",
-        fname:"Jméno",
-        lname:"Příjmení",
-        phone:"Telefon",
-        people:"Počet osob",
-        date:"Datum",
-        time:"Čas",
-        btn:"Rezervovat"
-    }
+const txt={
+  en:{
+    t:"Book a Table",
+    fn:"First Name",
+    ln:"Last Name",
+    ph:"Phone Number",
+    pe:"Number of People",
+    da:"Date",
+    ti:"Time",
+    b:"Reserve Now"
+  },
+  ru:{
+    t:"Забронировать стол",
+    fn:"Имя",
+    ln:"Фамилия",
+    ph:"Телефон",
+    pe:"Количество гостей",
+    da:"Дата",
+    ti:"Время",
+    b:"Забронировать"
+  },
+  cz:{
+    t:"Rezervace stolu",
+    fn:"Jmeno",
+    ln:"Prijmeni",
+    ph:"Telefon",
+    pe:"Pocet osob",
+    da:"Datum",
+    ti:"Cas",
+    b:"Rezervovat"
+  }
 };
 
-function setLang(lang){
-    document.getElementById("title").innerText = text[lang].title;
-    document.getElementById("l_fname").innerText = text[lang].fname;
-    document.getElementById("l_lname").innerText = text[lang].lname;
-    document.getElementById("l_phone").innerText = text[lang].phone;
-    document.getElementById("l_people").innerText = text[lang].people;
-    document.getElementById("l_date").innerText = text[lang].date;
-    document.getElementById("l_time").innerText = text[lang].time;
-    document.getElementById("submitBtn").innerText = text[lang].btn;
-
-    document.querySelectorAll(".lang button").forEach(b=>b.classList.remove("active"));
-    event.target.classList.add("active");
+function setLang(l,e){
+  title.innerText=txt[l].t;
+  lfn.innerText=txt[l].fn;
+  lln.innerText=txt[l].ln;
+  lph.innerText=txt[l].ph;
+  lpe.innerText=txt[l].pe;
+  lda.innerText=txt[l].da;
+  lti.innerText=txt[l].ti;
+  btn.innerText=txt[l].b;
+  document.querySelectorAll(".lang button").forEach(x=>x.classList.remove("active"));
+  e.classList.add("active");
 }
-
-document.getElementById("reservationForm").addEventListener("submit", e=>{
-    e.preventDefault();
-    const formData = new FormData(e.target);
-
-    fetch(SCRIPT_URL,{
-        method:"POST",
-        body:formData
-    })
-    .then(()=>alert("Reservation received"))
-    .catch(()=>alert("Error"));
-});
 </script>
 
 </body>
