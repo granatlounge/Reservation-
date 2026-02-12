@@ -10,7 +10,6 @@ body{margin:0;background:#000;font-family:Arial,Helvetica,sans-serif;color:#fff}
 .container{max-width:420px;margin:auto;padding:20px;text-align:center}
 .logo img{width:220px;max-width:80%;margin:20px auto}
 
-/* notice */
 .notice{
   background:#111;
   border:1px solid #00e5ff;
@@ -22,12 +21,10 @@ body{margin:0;background:#000;font-family:Arial,Helvetica,sans-serif;color:#fff}
   opacity:.9;
 }
 
-/* language */
 .lang{display:flex;justify-content:center;gap:10px;margin-bottom:20px}
 .lang button{padding:10px 18px;border:2px solid #00e5ff;background:transparent;color:#00e5ff;border-radius:8px}
 .lang button.active{background:#00e5ff;color:#000}
 
-/* form */
 label{text-align:left;display:block;margin-top:14px;opacity:.85}
 input,select{
   width:100%;
@@ -37,8 +34,9 @@ input,select{
   border-radius:8px;
   background:#222;
   color:#fff;
-  font-size:16px; /* prevents mobile auto zoom */
+  font-size:16px;
 }
+
 button.submit{
   margin-top:26px;
   width:100%;
@@ -51,7 +49,6 @@ button.submit{
   color:#000
 }
 
-/* popup */
 .popup{
   position:fixed;
   inset:0;
@@ -99,8 +96,8 @@ We will contact you shortly via phone.
 <label id="l_place">Reservation Area</label>
 <select name="Area" id="area">
   <option value="Main Hall">Main Hall</option>
-  <option value="Karaoke 2-10 people">Karaoke 2-10 people</option>
-  <option value="Karaoke 10-20 people">Karaoke 10-20 people</option>
+  <option value="Karaoke 2-10 people - 500 CZK">Karaoke 2-10 people (500 CZK / hour)</option>
+  <option value="Karaoke 10-20 people - 600 CZK">Karaoke 10-20 people (600 CZK / hour)</option>
 </select>
 
 <label id="l_name">Name</label>
@@ -115,8 +112,18 @@ We will contact you shortly via phone.
 <label id="l_date">Date</label>
 <input type="date" name="Date" required>
 
-<label id="l_time">Time</label>
+<label id="l_time">Start Time</label>
 <input type="time" name="Time" required>
+
+<!-- Karaoke duration -->
+<div id="durationBox" style="display:none;">
+  <label>Duration (minimum 2 hours)</label>
+  <select name="Duration" id="duration">
+    <option value="2">2 hours (minimum)</option>
+    <option value="3">3 hours</option>
+    <option value="4">4 hours</option>
+  </select>
+</div>
 
 <button class="submit" id="submitBtn">Reserve</button>
 </form>
@@ -139,7 +146,7 @@ en:{
  phone:"Phone",
  people:"Number of People",
  date:"Date",
- time:"Time",
+ time:"Start Time",
  btn:"Reserve",
  table:"Reservation completed.",
  karaoke:"Reservation request sent. We will contact you shortly via phone."
@@ -152,7 +159,7 @@ ru:{
  phone:"Phone",
  people:"People",
  date:"Date",
- time:"Time",
+ time:"Start Time",
  btn:"Send",
  table:"Reservation completed.",
  karaoke:"Request sent. We will contact you shortly via phone."
@@ -165,7 +172,7 @@ cz:{
  phone:"Phone",
  people:"People",
  date:"Date",
- time:"Time",
+ time:"Start Time",
  btn:"Odeslat",
  table:"Rezervace dokoncena.",
  karaoke:"Zadost odeslana. Budeme vas kontaktovat telefonicky."
@@ -189,6 +196,18 @@ function setLang(l,b){
  submitBtn.innerText=text[l].btn;
 }
 
+/* Show duration only for karaoke */
+const areaSelect=document.getElementById("area");
+const durationBox=document.getElementById("durationBox");
+
+areaSelect.addEventListener("change",function(){
+ if(this.value==="Main Hall"){
+   durationBox.style.display="none";
+ }else{
+   durationBox.style.display="block";
+ }
+});
+
 document.getElementById("form").addEventListener("submit",function(e){
  e.preventDefault();
  fetch(this.action,{method:"POST",body:new FormData(this)})
@@ -201,6 +220,7 @@ document.getElementById("form").addEventListener("submit",function(e){
        : text[currentLang].karaoke;
    setTimeout(()=>popup.style.display="none",3000);
    this.reset();
+   durationBox.style.display="none";
  });
 });
 </script>
