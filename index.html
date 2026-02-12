@@ -64,6 +64,8 @@ button.submit{
   border-radius:14px;
   max-width:280px
 }
+
+.hidden{display:none}
 </style>
 </head>
 
@@ -76,6 +78,7 @@ button.submit{
 
 <div class="notice" id="karaokeNotice">
 Please note: Karaoke reservations are subject to availability and require confirmation.
+Minimum booking time is 2 hours.
 We will contact you shortly via phone.
 </div>
 
@@ -96,8 +99,8 @@ We will contact you shortly via phone.
 <label id="l_place">Reservation Area</label>
 <select name="Area" id="area">
   <option value="Main Hall">Main Hall</option>
-  <option value="Karaoke 2-10 people - 500 CZK">Karaoke 2-10 people (500 CZK / hour)</option>
-  <option value="Karaoke 10-20 people - 600 CZK">Karaoke 10-20 people (600 CZK / hour)</option>
+  <option value="Karaoke 2-10 people - 500 CZK">Karaoke 2–10 people (500 CZK / hour)</option>
+  <option value="Karaoke 10-20 people - 600 CZK">Karaoke 10–20 people (600 CZK / hour)</option>
 </select>
 
 <label id="l_name">Name</label>
@@ -112,17 +115,12 @@ We will contact you shortly via phone.
 <label id="l_date">Date</label>
 <input type="date" name="Date" required>
 
-<label id="l_time">Start Time</label>
-<input type="time" name="Time" required>
+<label id="l_start">Start Time</label>
+<input type="time" name="Start Time" id="startTime" required>
 
-<!-- Karaoke duration -->
-<div id="durationBox" style="display:none;">
-  <label>Duration (minimum 2 hours)</label>
-  <select name="Duration" id="duration">
-    <option value="2">2 hours (minimum)</option>
-    <option value="3">3 hours</option>
-    <option value="4">4 hours</option>
-  </select>
+<div id="endTimeBox" class="hidden">
+  <label id="l_end">End Time (minimum 2 hours later)</label>
+  <input type="time" name="End Time" id="endTime">
 </div>
 
 <button class="submit" id="submitBtn">Reserve</button>
@@ -140,39 +138,42 @@ We will contact you shortly via phone.
 const text={
 en:{
  title:"Book a Reservation",
- notice:"Please note: Karaoke reservations are subject to availability and require confirmation. We will contact you shortly via phone.",
+ notice:"Please note: Karaoke reservations are subject to availability and require confirmation. Minimum booking time is 2 hours. We will contact you shortly via phone.",
  place:"Reservation Area",
  name:"Name",
  phone:"Phone",
  people:"Number of People",
  date:"Date",
- time:"Start Time",
+ start:"Start Time",
+ end:"End Time (minimum 2 hours later)",
  btn:"Reserve",
  table:"Reservation completed.",
  karaoke:"Reservation request sent. We will contact you shortly via phone."
 },
 ru:{
  title:"Reservation",
- notice:"Обратите внимание: бронирование караоке зависит от наличия свободных мест и требует подтверждения. Мы свяжемся с вами по телефону в ближайшее время.",
+ notice:"Обратите внимание: бронирование караоке зависит от наличия свободных мест и требует подтверждения. Минимальное время бронирования — 2 часа. Мы свяжемся с вами по телефону.",
  place:"Area",
  name:"Name",
  phone:"Phone",
  people:"People",
  date:"Date",
- time:"Start Time",
+ start:"Start Time",
+ end:"End Time (minimum 2 hours later)",
  btn:"Send",
  table:"Reservation completed.",
  karaoke:"Request sent. We will contact you shortly via phone."
 },
 cz:{
  title:"Rezervace",
- notice:"Upozornění: Rezervace karaoke závisí na dostupnosti a vyžaduje potvrzení. Budeme vás brzy kontaktovat telefonicky.",
+ notice:"Upozornění: Rezervace karaoke závisí na dostupnosti a vyžaduje potvrzení. Minimální doba rezervace jsou 2 hodiny. Budeme vás kontaktovat telefonicky.",
  place:"Area",
  name:"Name",
  phone:"Phone",
  people:"People",
  date:"Date",
- time:"Start Time",
+ start:"Start Time",
+ end:"End Time (minimum 2 hours later)",
  btn:"Odeslat",
  table:"Rezervace dokoncena.",
  karaoke:"Zadost odeslana. Budeme vas kontaktovat telefonicky."
@@ -192,36 +193,50 @@ function setLang(l,b){
  l_phone.innerText=text[l].phone;
  l_people.innerText=text[l].people;
  l_date.innerText=text[l].date;
- l_time.innerText=text[l].time;
+ l_start.innerText=text[l].start;
+ l_end.innerText=text[l].end;
  submitBtn.innerText=text[l].btn;
 }
 
-/* Show duration only for karaoke */
-const areaSelect=document.getElementById("area");
-const durationBox=document.getElementById("durationBox");
+const area=document.getElementById("area");
+const endBox=document.getElementById("endTimeBox");
+const startTime=document.getElementById("startTime");
+const endTime=document.getElementById("endTime");
 
-areaSelect.addEventListener("change",function(){
- if(this.value==="Main Hall"){
-   durationBox.style.display="none";
- }else{
-   durationBox.style.display="block";
- }
+area.addEventListener("change",()=>{
+  if(area.value==="Main Hall"){
+    endBox.classList.add("hidden");
+    endTime.required=false;
+  }else{
+    endBox.classList.remove("hidden");
+    endTime.required=true;
+  }
 });
 
 document.getElementById("form").addEventListener("submit",function(e){
- e.preventDefault();
- fetch(this.action,{method:"POST",body:new FormData(this)})
- .then(()=>{
-   const area=document.getElementById("area").value;
-   popup.style.display="flex";
-   popupText.innerText =
-     area==="Main Hall"
-       ? text[currentLang].table
-       : text[currentLang].karaoke;
-   setTimeout(()=>popup.style.display="none",3000);
-   this.reset();
-   durationBox.style.display="none";
- });
+  if(area.value!=="Main Hall"){
+    const start=new Date("1970-01-01T"+startTime.value+":00");
+    const end=new Date("1970-01-01T"+endTime.value+":00");
+    const diff=(end-start)/3600000;
+    if(diff<2){
+      alert("Minimum booking time for karaoke is 2 hours.");
+      e.preventDefault();
+      return;
+    }
+  }
+
+  e.preventDefault();
+  fetch(this.action,{method:"POST",body:new FormData(this)})
+  .then(()=>{
+    popup.style.display="flex";
+    popupText.innerText =
+      area.value==="Main Hall"
+        ? text[currentLang].table
+        : text[currentLang].karaoke;
+    setTimeout(()=>popup.style.display="none",3000);
+    this.reset();
+    endBox.classList.add("hidden");
+  });
 });
 </script>
 
