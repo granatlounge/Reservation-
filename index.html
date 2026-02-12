@@ -9,14 +9,52 @@
 body{margin:0;background:#000;font-family:Arial,Helvetica,sans-serif;color:#fff}
 .container{max-width:420px;margin:auto;padding:20px;text-align:center}
 .logo img{width:220px;max-width:80%;margin:20px auto}
+
+/* language */
 .lang{display:flex;justify-content:center;gap:10px;margin-bottom:20px}
 .lang button{padding:10px 18px;border:2px solid #00e5ff;background:transparent;color:#00e5ff;border-radius:8px}
 .lang button.active{background:#00e5ff;color:#000}
+
+/* form */
 label{text-align:left;display:block;margin-top:14px;opacity:.85}
-input,select{width:100%;padding:14px;margin-top:6px;border:none;border-radius:8px;background:#222;color:#fff}
-button.submit{margin-top:26px;width:100%;padding:18px;font-size:18px;font-weight:bold;border:none;border-radius:10px;background:#00e5ff;color:#000}
-.popup{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center}
-.popup-box{background:#111;border:2px solid #00e5ff;padding:26px;border-radius:14px}
+input,select{
+  width:100%;
+  padding:14px;
+  margin-top:6px;
+  border:none;
+  border-radius:8px;
+  background:#222;
+  color:#fff;
+  font-size:16px; /* IMPORTANT: prevents mobile zoom */
+}
+button.submit{
+  margin-top:26px;
+  width:100%;
+  padding:18px;
+  font-size:18px;
+  font-weight:bold;
+  border:none;
+  border-radius:10px;
+  background:#00e5ff;
+  color:#000
+}
+
+/* popup */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center
+}
+.popup-box{
+  background:#111;
+  border:2px solid #00e5ff;
+  padding:26px;
+  border-radius:14px;
+  max-width:280px
+}
 </style>
 </head>
 
@@ -86,7 +124,7 @@ en:{
  time:"Time",
  btn:"Reserve",
  table:"Reservation completed.",
- karaoke:"Reservation request sent. We will contact you shortly by email."
+ karaoke:"Reservation request sent. We will contact you shortly via phone."
 },
 ru:{
  title:"Reservation",
@@ -98,7 +136,7 @@ ru:{
  time:"Time",
  btn:"Send",
  table:"Reservation completed.",
- karaoke:"Request sent. We will contact you by email."
+ karaoke:"Request sent. We will contact you shortly via phone."
 },
 cz:{
  title:"Rezervace",
@@ -110,7 +148,7 @@ cz:{
  time:"Time",
  btn:"Odeslat",
  table:"Rezervace dokoncena.",
- karaoke:"Zadost odeslana. Budeme vas kontaktovat emailem."
+ karaoke:"Zadost odeslana. Budeme vas kontaktovat telefonicky."
 }
 };
 
@@ -136,9 +174,10 @@ document.getElementById("form").addEventListener("submit",function(e){
  .then(()=>{
    const area=document.getElementById("area").value;
    popup.style.display="flex";
-   popupText.innerText = area==="Main Hall"
-     ? text[currentLang].table
-     : text[currentLang].karaoke;
+   popupText.innerText =
+     area==="Main Hall"
+       ? text[currentLang].table
+       : text[currentLang].karaoke;
    setTimeout(()=>popup.style.display="none",3000);
    this.reset();
  });
