@@ -6,203 +6,142 @@
 <title>Granat Bar Reservation</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:#000;
-  font-family:Arial,Helvetica,sans-serif;
-  color:#fff;
-}
-.container{
-  max-width:420px;
-  margin:auto;
-  padding:20px;
-  text-align:center;
-}
-.logo{
-  margin:20px 0 10px;
-}
-.logo img{
-  width:220px;
-  max-width:80%;
-}
-.lang-buttons{
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  margin:20px 0;
-}
-.lang-buttons button{
-  padding:12px 20px;
-  font-size:16px;
-  border-radius:8px;
-  border:2px solid #00e5ff;
-  background:transparent;
-  color:#00e5ff;
-  cursor:pointer;
-}
-.lang-buttons button.active{
-  background:#00e5ff;
-  color:#000;
-}
-h1{
-  font-size:34px;
-  margin:20px 0;
-}
-label{
-  display:block;
-  text-align:left;
-  margin-top:14px;
-  opacity:.8;
-}
-input{
-  width:100%;
-  padding:16px;
-  margin-top:6px;
-  border-radius:8px;
-  border:none;
-  background:#222;
-  color:#fff;
-  font-size:16px;
-}
-button.submit{
-  width:100%;
-  margin-top:26px;
-  padding:18px;
-  font-size:20px;
-  font-weight:bold;
-  border:none;
-  border-radius:10px;
-  background:#00e5ff;
-  color:#000;
-  cursor:pointer;
-}
-.popup{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-}
-.popup-box{
-  background:#111;
-  border:2px solid #00e5ff;
-  padding:30px 24px;
-  border-radius:14px;
-  text-align:center;
-}
-.popup-box h2{
-  margin:0;
-  font-size:22px;
-  color:#00e5ff;
-}
+body{margin:0;background:#000;font-family:Arial,Helvetica,sans-serif;color:#fff}
+.container{max-width:420px;margin:auto;padding:20px;text-align:center}
+.logo img{width:220px;max-width:80%;margin:20px auto}
+.lang{display:flex;justify-content:center;gap:10px;margin-bottom:20px}
+.lang button{padding:10px 18px;border:2px solid #00e5ff;background:transparent;color:#00e5ff;border-radius:8px}
+.lang button.active{background:#00e5ff;color:#000}
+label{text-align:left;display:block;margin-top:14px;opacity:.85}
+input,select{width:100%;padding:14px;margin-top:6px;border:none;border-radius:8px;background:#222;color:#fff}
+button.submit{margin-top:26px;width:100%;padding:18px;font-size:18px;font-weight:bold;border:none;border-radius:10px;background:#00e5ff;color:#000}
+.popup{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center}
+.popup-box{background:#111;border:2px solid #00e5ff;padding:26px;border-radius:14px}
 </style>
 </head>
 
 <body>
 <div class="container">
 
-  <div class="logo">
-    <img src="Logo.png.jpeg" alt="Granat Bar">
-  </div>
+<div class="logo">
+  <img src="Logo.png.jpeg" alt="Granat Bar">
+</div>
 
-  <div class="lang-buttons">
-    <button class="active" onclick="setLang('en')">EN</button>
-    <button onclick="setLang('ru')">RU</button>
-    <button onclick="setLang('cz')">CZ</button>
-  </div>
+<div class="lang">
+  <button class="active" onclick="setLang('en',this)">EN</button>
+  <button onclick="setLang('ru',this)">RU</button>
+  <button onclick="setLang('cz',this)">CZ</button>
+</div>
 
-  <h1 id="title">Book a Table</h1>
+<h1 id="title">Book a Reservation</h1>
 
-  <form id="reservationForm">
-    <label id="l_fname">First Name</label>
-    <input name="First name" required>
+<form id="form" method="POST" action="https://formsubmit.co/granatpraha@proton.me">
 
-    <label id="l_lname">Last Name</label>
-    <input name="Last name" required>
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_subject" value="New Reservation">
 
-    <label id="l_phone">Phone</label>
-    <input name="Phone" required>
+<label id="l_place">Reservation Area</label>
+<select name="Area" id="area">
+  <option value="Main Hall">Main Hall</option>
+  <option value="Karaoke 2-10 people">Karaoke 2-10 people</option>
+  <option value="Karaoke 10-20 people">Karaoke 10-20 people</option>
+</select>
 
-    <label id="l_people">Number of People</label>
-    <input type="number" name="People" min="1" max="20" required>
+<label id="l_name">Name</label>
+<input name="Name" required>
 
-    <label id="l_date">Date</label>
-    <input type="date" name="Date" required>
+<label id="l_phone">Phone</label>
+<input name="Phone" required>
 
-    <label id="l_time">Time</label>
-    <input type="time" name="Time" required>
+<label id="l_people">Number of People</label>
+<input type="number" name="People" required>
 
-    <button class="submit" type="submit" id="btn_submit">Reserve Now</button>
-  </form>
+<label id="l_date">Date</label>
+<input type="date" name="Date" required>
+
+<label id="l_time">Time</label>
+<input type="time" name="Time" required>
+
+<button class="submit" id="submitBtn">Reserve</button>
+</form>
 
 </div>
 
 <div class="popup" id="popup">
   <div class="popup-box">
-    <h2>Reservation completed</h2>
+    <p id="popupText"></p>
   </div>
 </div>
 
 <script>
-const texts={
-  en:{
-    title:"Book a Table",
-    fname:"First Name",
-    lname:"Last Name",
-    phone:"Phone",
-    people:"Number of People",
-    date:"Date",
-    time:"Time",
-    btn:"Reserve Now"
-  },
-  ru:{
-    title:"Reserve Table",
-    fname:"First Name",
-    lname:"Last Name",
-    phone:"Phone",
-    people:"People",
-    date:"Date",
-    time:"Time",
-    btn:"Reserve"
-  },
-  cz:{
-    title:"Reserve Table",
-    fname:"First Name",
-    lname:"Last Name",
-    phone:"Phone",
-    people:"People",
-    date:"Date",
-    time:"Time",
-    btn:"Reserve"
-  }
+const text={
+en:{
+ title:"Book a Reservation",
+ place:"Reservation Area",
+ name:"Name",
+ phone:"Phone",
+ people:"Number of People",
+ date:"Date",
+ time:"Time",
+ btn:"Reserve",
+ table:"Reservation completed.",
+ karaoke:"Reservation request sent. We will contact you shortly by email."
+},
+ru:{
+ title:"Reservation",
+ place:"Area",
+ name:"Name",
+ phone:"Phone",
+ people:"People",
+ date:"Date",
+ time:"Time",
+ btn:"Send",
+ table:"Reservation completed.",
+ karaoke:"Request sent. We will contact you by email."
+},
+cz:{
+ title:"Rezervace",
+ place:"Area",
+ name:"Name",
+ phone:"Phone",
+ people:"People",
+ date:"Date",
+ time:"Time",
+ btn:"Odeslat",
+ table:"Rezervace dokoncena.",
+ karaoke:"Zadost odeslana. Budeme vas kontaktovat emailem."
+}
 };
 
-function setLang(l){
-  document.querySelectorAll(".lang-buttons button").forEach(b=>b.classList.remove("active"));
-  event.target.classList.add("active");
-  document.getElementById("title").innerText=texts[l].title;
-  l_fname.innerText=texts[l].fname;
-  l_lname.innerText=texts[l].lname;
-  l_phone.innerText=texts[l].phone;
-  l_people.innerText=texts[l].people;
-  l_date.innerText=texts[l].date;
-  l_time.innerText=texts[l].time;
-  btn_submit.innerText=texts[l].btn;
+let currentLang="en";
+
+function setLang(l,b){
+ currentLang=l;
+ document.querySelectorAll(".lang button").forEach(x=>x.classList.remove("active"));
+ b.classList.add("active");
+ title.innerText=text[l].title;
+ l_place.innerText=text[l].place;
+ l_name.innerText=text[l].name;
+ l_phone.innerText=text[l].phone;
+ l_people.innerText=text[l].people;
+ l_date.innerText=text[l].date;
+ l_time.innerText=text[l].time;
+ submitBtn.innerText=text[l].btn;
 }
 
-document.getElementById("reservationForm").addEventListener("submit",function(e){
-  e.preventDefault();
-  fetch("https://formsubmit.co/ajax/granatpraha@proton.me",{
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(Object.fromEntries(new FormData(this)))
-  }).then(()=>{
-    document.getElementById("popup").style.display="flex";
-    this.reset();
-    setTimeout(()=>popup.style.display="none",2500);
-  });
+document.getElementById("form").addEventListener("submit",function(e){
+ e.preventDefault();
+ fetch(this.action,{method:"POST",body:new FormData(this)})
+ .then(()=>{
+   const area=document.getElementById("area").value;
+   popup.style.display="flex";
+   popupText.innerText = area==="Main Hall"
+     ? text[currentLang].table
+     : text[currentLang].karaoke;
+   setTimeout(()=>popup.style.display="none",3000);
+   this.reset();
+ });
 });
 </script>
 
