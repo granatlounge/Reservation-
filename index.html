@@ -10,6 +10,18 @@ body{margin:0;background:#000;font-family:Arial,Helvetica,sans-serif;color:#fff}
 .container{max-width:420px;margin:auto;padding:20px;text-align:center}
 .logo img{width:220px;max-width:80%;margin:20px auto}
 
+/* notice */
+.notice{
+  background:#111;
+  border:1px solid #00e5ff;
+  padding:12px 14px;
+  border-radius:10px;
+  font-size:14px;
+  line-height:1.4;
+  margin:10px 0 20px;
+  opacity:.9;
+}
+
 /* language */
 .lang{display:flex;justify-content:center;gap:10px;margin-bottom:20px}
 .lang button{padding:10px 18px;border:2px solid #00e5ff;background:transparent;color:#00e5ff;border-radius:8px}
@@ -25,7 +37,7 @@ input,select{
   border-radius:8px;
   background:#222;
   color:#fff;
-  font-size:16px; /* IMPORTANT: prevents mobile zoom */
+  font-size:16px; /* prevents mobile auto zoom */
 }
 button.submit{
   margin-top:26px;
@@ -63,6 +75,11 @@ button.submit{
 
 <div class="logo">
   <img src="Logo.png.jpeg" alt="Granat Bar">
+</div>
+
+<div class="notice" id="karaokeNotice">
+Please note: Karaoke reservations are subject to availability and require confirmation.
+We will contact you shortly via phone.
 </div>
 
 <div class="lang">
@@ -116,6 +133,7 @@ button.submit{
 const text={
 en:{
  title:"Book a Reservation",
+ notice:"Please note: Karaoke reservations are subject to availability and require confirmation. We will contact you shortly via phone.",
  place:"Reservation Area",
  name:"Name",
  phone:"Phone",
@@ -128,6 +146,7 @@ en:{
 },
 ru:{
  title:"Reservation",
+ notice:"Обратите внимание: бронирование караоке зависит от наличия свободных мест и требует подтверждения. Мы свяжемся с вами по телефону в ближайшее время.",
  place:"Area",
  name:"Name",
  phone:"Phone",
@@ -140,6 +159,7 @@ ru:{
 },
 cz:{
  title:"Rezervace",
+ notice:"Upozornění: Rezervace karaoke závisí na dostupnosti a vyžaduje potvrzení. Budeme vás brzy kontaktovat telefonicky.",
  place:"Area",
  name:"Name",
  phone:"Phone",
@@ -159,6 +179,7 @@ function setLang(l,b){
  document.querySelectorAll(".lang button").forEach(x=>x.classList.remove("active"));
  b.classList.add("active");
  title.innerText=text[l].title;
+ karaokeNotice.innerText=text[l].notice;
  l_place.innerText=text[l].place;
  l_name.innerText=text[l].name;
  l_phone.innerText=text[l].phone;
